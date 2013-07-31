@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <style type="text/css">
+      h1 {
+        font-size: 1.2em;
+        font-family: Georgia, serif;
+        color: gray;
+      }
+    </style>
+    <script src="redblack.js"></script>
+  </head>
+  <body>
+    <h1>Red Black Tree Test</h1>
+    <ul id="tree">
+    </ul>
+    <script type="text/javascript">
+      var rbtree = new RedBlackTree();
+      rbtree.insert(rbtree, 1);
+      rbtree.insert(rbtree, 17);
+      rbtree.insert(rbtree, 14);
+      rbtree.insert(rbtree, 7);
+      rbtree.insert(rbtree, 8);
+      rbtree.insert(rbtree, 9);
+      rbtree.insert(rbtree, 20);
+      rbtree.insert(rbtree, 100);
+      rbtree.walk(rbtree, rbtree.root);
+    </script>
+  </body>
+</html>
