@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <style type="text/css">
+      h1 {
+        font-size: 1.2em;
+        font-family: Georgia, serif;
+        color: gray;
+      }
+    </style>
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="http://underscorejs.org/underscore-min.js"></script>
+    <script src="http://backbonejs.org/backbone-min.js"></script>
+    <script type="text/template" id="inorderList-template">
+      <div>
+        <h1>Red Black Tree Using Backbone.js</h1>
+        <ul id="tree">
+        </ul>
+      </div>
+    </script>
+  </head>
+  <body>
+    <div id="main">
+    </div>
+    <script src="lib/js/redblackModel.js"></script>
+    <script src="lib/js/redblackView.js"></script>
+    <script type="text/javascript">
+      var rbtree = new RedBlackTreeModel();
+      var rbtreeView = new RedBlackTreeView({el: $("#main"), model: rbtree});
+      rbtree.insert(rbtree, 1);
+      rbtree.insert(rbtree, 17);
+      rbtree.insert(rbtree, 14);
+      rbtree.insert(rbtree, 7);
+      rbtree.insert(rbtree, 8);
+      rbtree.insert(rbtree, 9);
+      rbtree.insert(rbtree, 20);
+      rbtree.insert(rbtree, 100);
+      rbtreeView.walk(rbtree, rbtree.root);
+    </script>
+  </body>
+</html>
