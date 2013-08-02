@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Tree</title>
+    <style type="text/css">
+      h1 {
+        font-family: Georgia, serif;
+        font-size: 1.2em;
+        color: gray;
+      }
+      #main {
+        margin-left: auto;
+        margin-right: auto;
+        width: 80%;
+      }
+      canvas {
+        border-width: 1px;
+        border-style: solid;
+        border-color: black;
+      }
+    </style>
+    <script type="text/javascript" src="redblack.js"></script>
+  </head>
+  <body>
+    <h1>Tree Demo</h1>
+    <div id="main">
+      <canvas id="tree" width="900" height="600"></canvas>
+    </div>
+    <script type="text/javascript">
+      var rbtree = new RedBlackTree();
+      rbtree.insert(rbtree, 1);
+      rbtree.insert(rbtree, 17);
+      rbtree.insert(rbtree, 14);
+      rbtree.insert(rbtree, 7);
+      rbtree.insert(rbtree, 8);
+      rbtree.insert(rbtree, 9);
+      rbtree.insert(rbtree, 20);
+      rbtree.insert(rbtree, 100);
+      rbtree.insert(rbtree, 12);
+      rbtree.insert(rbtree, 10);
+
+      var c = document.getElementById("tree");
+      var ctx = c.getContext("2d");
+
+      var getHeight = function(tree, z) {
+        if(z != tree.nil) {
+          var lheight = getHeight(tree, z.left);
+          var rheight = getHeight(tree, z.right);
+
+          if(lheight > rheight)
+            return lheight+1;
+          else
+            return rheight+1;
+        }
+        else {
+          return 0;
+        }
+      }
+
+      var width = 300;
+
+      var levelOrderWalk = function(tree, z) {
+        var h = getHeight(tree, z);
+        console.log("H: " + h);
+
+        var mid = Math.floor(c.width/2);
+        for(var i=1;i<=h;i++) {
+          displayLevel(tree, z, mid, i*100, i);
+        }
+      }
+
+      var displayLevel = function(tree, z, x, y, level) {
+        if(z != tree.nil) {
+          if(level == 1) {
+            ctx.beginPath();
+            ctx.arc(x, y, 30, 0, 2*Math.PI);
+            ctx.fillStyle = z.color;
+            ctx.fill();
+            ctx.fillStyle = "white";
+            ctx.font="25px Arial";
+
+            if(z.key < 10)
+              ctx.fillText(z.key, x-8, y+8);
+            else if(z.key < 100)
+              ctx.fillText(z.key, x-14, y+8);
+            else
+              ctx.fillText(z.key, x-22, y+8);
+            console.log("KEY: " + z.key);
+            
+//          ctx.moveTo(x, y+30);
+//          ctx.lineTo(x, y+30+50);
+//          ctx.stroke();
+            
+          }
+          else if(level > 1) {
+            displayLevel(tree, z.left, x, y, level-1);
+            displayLevel(tree, z.right, x, y, level-1);
+          }
+        }
+      }
+
+      levelOrderWalk(rbtree, rbtree.root);
+    </script>
+  </body>
+</html>
