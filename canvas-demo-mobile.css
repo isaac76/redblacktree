@@ -1,0 +1,25 @@
+body {
+  font-family: Georiga, Times, serif;
+  font-size: 40px;
+}
+#redspan {
+  color: #FF0000;
+}
+#table {
+}
+#tablerow {
+}
+#redblackdesc {
+  display: none;
+}
+#rbcanvas {
+}
+aside {
+}
+#redblack_js {
+  border-width: 0px;
+}
+footer {
+  display: none;
+}
+
