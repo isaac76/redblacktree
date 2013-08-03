@@ -1,0 +1,58 @@
+body {
+  font-family: Georiga, Times, serif;
+  font-size: small;
+  margin: 0px;
+  color: #606060;
+  background: #606060;
+}
+header.top {
+  margin: 10px 10px 0px 10px;
+  padding: 10px;
+  height: 8em;
+  background: #FFFFFF;
+}
+#redspan {
+  color: #FF0000;
+}
+#table {
+  display: table;
+  border-spacing: 10px;
+}
+#tablerow {
+  display: table-row;
+}
+#redblackdesc {
+  display: table-cell;
+  vertical-align: top;
+  width: 20%;
+  padding: 10px;
+  padding-left: 0px;
+  background: #FFFFFF;
+}
+#redblackdesc ul {
+  list-style-type: decimal;
+}
+#rbcanvas {
+  display: table-cell;
+  vertical-align: top;
+  padding: 15px;
+  background: #FFFFFF;
+}
+aside {
+  display:table-cell;
+  vertical-align: top;
+  padding: 5px;
+  background: #FFFFFF;
+}
+#redblack_js {
+  height: 510px;
+  overflow: scroll;
+  border-width: 0px;
+}
+footer {
+  text-align: center;
+  padding: 15px;
+  margin: 0px 10px 10px 10px;
+  font-size: 1.2em;
+  background: #FFFFFF;
+}
