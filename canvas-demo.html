@@ -2,31 +2,36 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Tree</title>
-    <style type="text/css">
-      h1 {
-        font-family: Georgia, serif;
-        font-size: 1.2em;
-        color: gray;
-      }
-      #main {
-        margin-left: auto;
-        margin-right: auto;
-        width: 80%;
-      }
-      canvas {
-        border-width: 1px;
-        border-style: solid;
-        border-color: black;
-      }
-    </style>
-    <script type="text/javascript" src="redblack.js"></script>
+    <title>Red/Black Tree Demo</title>
+    <link rel="stylesheet" type="text/css" href="canvas-demo.css"> </style>
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+    <script type="text/javascript" src="lib/js/redblack.js"></script>
   </head>
   <body>
-    <h1>Tree Demo</h1>
-    <div id="main">
-      <canvas id="tree" width="900" height="600"></canvas>
+    <header class="top">
+      <h1><span id="redspan">Red</span>/Black Tree Demo</h1>
+    </header>
+    <div id="table">
+      <div id="tablerow">
+        <section id="redblackdesc">
+          <ul>
+            <li>Every node is either red or black</li>
+            <li>The root is black</li>
+            <li>Every leaf is black</li>
+            <li>If a node is red, then both its children are black</li>
+            <li>For each node, all paths from the node to the descendant leaves contain the same number of black nodes</li>
+          </ul>
+        </section>
+        <section id="rbcanvas">
+          <canvas id="tree" width="600" height="500"></canvas>
+        </section>
+        <aside id="code">
+          <pre class="prettyprint" id="redblack_js"></pre>
+        </aside>
+      </div>
     </div>
+    <footer>2013, Isaac_O</footer>
+
     <script type="text/javascript">
       var rbtree = new RedBlackTree();
       rbtree.insert(rbtree, 1);
@@ -37,8 +42,6 @@
       rbtree.insert(rbtree, 9);
       rbtree.insert(rbtree, 20);
       rbtree.insert(rbtree, 100);
-      rbtree.insert(rbtree, 12);
-      rbtree.insert(rbtree, 10);
 
       var c = document.getElementById("tree");
       var ctx = c.getContext("2d");
@@ -58,21 +61,36 @@
         }
       }
 
-      var width = 300;
-
       var levelOrderWalk = function(tree, z) {
+        z.xOffset = Math.floor(c.width/2);
         var h = getHeight(tree, z);
-        console.log("H: " + h);
-
-        var mid = Math.floor(c.width/2);
         for(var i=1;i<=h;i++) {
-          displayLevel(tree, z, mid, i*100, i);
+          displayLevel(tree, z, i*100, i, i);
         }
       }
 
-      var displayLevel = function(tree, z, x, y, level) {
+      var displayLevel = function(tree, z, y, level, actual) {
         if(z != tree.nil) {
           if(level == 1) {
+            var h = getHeight(tree, tree.root);
+
+            var x;
+            if(z == tree.root) {
+              x = z.xOffset;
+            }
+            else {
+              x = z.parent.xOffset;
+              if(z == z.parent.left) {
+                x = x - (50*(h - actual+1));
+              }
+              else {
+                x = x + (50*(h - actual+1));
+              }
+              z.xOffset = x;
+            }
+
+            z.yOffset = y;
+
             ctx.beginPath();
             ctx.arc(x, y, 30, 0, 2*Math.PI);
             ctx.fillStyle = z.color;
@@ -86,21 +104,40 @@
               ctx.fillText(z.key, x-14, y+8);
             else
               ctx.fillText(z.key, x-22, y+8);
-            console.log("KEY: " + z.key);
-            
-//          ctx.moveTo(x, y+30);
-//          ctx.lineTo(x, y+30+50);
-//          ctx.stroke();
-            
+
+
+            if(z.parent != tree.nil) {
+              ctx.moveTo(z.xOffset, y-30);
+              ctx.lineTo(z.parent.xOffset, z.parent.yOffset+30);
+              ctx.stroke();
+            }
           }
           else if(level > 1) {
-            displayLevel(tree, z.left, x, y, level-1);
-            displayLevel(tree, z.right, x, y, level-1);
+            displayLevel(tree, z.left, y, level-1, actual);
+            displayLevel(tree, z.right, y, level-1, actual);
           }
         }
       }
 
       levelOrderWalk(rbtree, rbtree.root);
+
+      var url = "http://localhost/lib/js/redblack.js";
+      var request = new XMLHttpRequest();
+      request.open("GET", url);
+      request.onload = function() {
+        if(request.status == 200) {
+          var redblack_js = document.getElementById("redblack_js");
+          var txt = document.createTextNode(request.responseText);
+          redblack_js.appendChild(txt);
+        }
+        else {
+          var redblack_js = document.getElementById("redblack_js");
+          var txt = document.createTextNode("Unable to locate Red/Black Tree source.");
+          redblack_js.appendChild(txt);
+        }
+      };
+      request.send(null);
     </script>
   </body>
 </html>
+
