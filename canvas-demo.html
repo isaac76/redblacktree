@@ -3,10 +3,14 @@
   <head>
     <meta charset="utf-8">
     <title>Red/Black Tree Demo</title>
-    <link rel="stylesheet" type="text/css" href="canvas-demo.css" media="screen and (min-device-width: 481px)"> </style>
-    <link rel="stylesheet" type="text/css" href="canvas-demo-mobile.css" media="screen and (max-device-width: 480px)"></style>
+    <link rel="stylesheet" type="text/css" href="canvas-demo.css" 
+          media="screen and (min-device-width: 481px)"> </style>
+    <link rel="stylesheet" type="text/css" href="canvas-demo-mobile.css" 
+          media="screen and (max-device-width: 480px)"></style>
+    <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
     <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
     <script type="text/javascript" src="lib/js/redblack.js"></script>
+    <script type="text/javascript" src="canvas-demo.js"></script>
   </head>
   <body>
     <header class="top">
@@ -20,11 +24,17 @@
             <li>The root is black</li>
             <li>Every leaf is black</li>
             <li>If a node is red, then both its children are black</li>
-            <li>For each node, all paths from the node to the descendant leaves contain the same number of black nodes</li>
+            <li>For each node, all paths from the node to the descendant 
+                leaves contain the same number of black nodes</li>
           </ul>
         </section>
         <section id="rbcanvas">
           <canvas id="tree" width="600" height="500"></canvas>
+          <form>
+            <input type="button" onclick="addNode()" value="Add Node"></input>
+            <input id ="userInput" type="text"></input>
+            <input id="clearAll" type="button" onclick="clearTree()" value="Clear"></input>
+          </form>
         </section>
         <aside id="code">
           <pre class="prettyprint" id="redblack_js"></pre>
@@ -32,113 +42,6 @@
       </div>
     </div>
     <footer>2013, Isaac_O</footer>
-
-    <script type="text/javascript">
-      var rbtree = new RedBlackTree();
-      rbtree.insert(rbtree, 1);
-      rbtree.insert(rbtree, 17);
-      rbtree.insert(rbtree, 14);
-      rbtree.insert(rbtree, 7);
-      rbtree.insert(rbtree, 8);
-      rbtree.insert(rbtree, 9);
-      rbtree.insert(rbtree, 20);
-      rbtree.insert(rbtree, 100);
-
-      var c = document.getElementById("tree");
-      var ctx = c.getContext("2d");
-
-      var getHeight = function(tree, z) {
-        if(z != tree.nil) {
-          var lheight = getHeight(tree, z.left);
-          var rheight = getHeight(tree, z.right);
-
-          if(lheight > rheight)
-            return lheight+1;
-          else
-            return rheight+1;
-        }
-        else {
-          return 0;
-        }
-      }
-
-      var levelOrderWalk = function(tree, z) {
-        z.xOffset = Math.floor(c.width/2);
-        var h = getHeight(tree, z);
-        for(var i=1;i<=h;i++) {
-          displayLevel(tree, z, i*100, i, i);
-        }
-      }
-
-      var displayLevel = function(tree, z, y, level, actual) {
-        if(z != tree.nil) {
-          if(level == 1) {
-            var h = getHeight(tree, tree.root);
-
-            var x;
-            if(z == tree.root) {
-              x = z.xOffset;
-            }
-            else {
-              x = z.parent.xOffset;
-              if(z == z.parent.left) {
-                x = x - (50*(h - actual+1));
-              }
-              else {
-                x = x + (50*(h - actual+1));
-              }
-              z.xOffset = x;
-            }
-
-            z.yOffset = y;
-
-            ctx.beginPath();
-            ctx.arc(x, y, 30, 0, 2*Math.PI);
-            ctx.fillStyle = z.color;
-            ctx.fill();
-            ctx.fillStyle = "white";
-            ctx.font="25px Arial";
-
-            if(z.key < 10)
-              ctx.fillText(z.key, x-8, y+8);
-            else if(z.key < 100)
-              ctx.fillText(z.key, x-14, y+8);
-            else
-              ctx.fillText(z.key, x-22, y+8);
-
-
-            if(z.parent != tree.nil) {
-              ctx.moveTo(z.xOffset, y-30);
-              ctx.lineTo(z.parent.xOffset, z.parent.yOffset+30);
-              ctx.stroke();
-            }
-          }
-          else if(level > 1) {
-            displayLevel(tree, z.left, y, level-1, actual);
-            displayLevel(tree, z.right, y, level-1, actual);
-          }
-        }
-      }
-
-      levelOrderWalk(rbtree, rbtree.root);
-
-      var url = "http://localhost/lib/js/redblack.js";
-      var request = new XMLHttpRequest();
-      request.open("GET", url);
-      request.onload = function() {
-        if(request.status == 200) {
-          var redblack_js = document.getElementById("redblack_js");
-          var txt = document.createTextNode(request.responseText);
-          redblack_js.appendChild(txt);
-        }
-        else {
-          var redblack_js = document.getElementById("redblack_js");
-          var txt = document.createTextNode("Unable to locate Red/Black Tree source.");
-          redblack_js.appendChild(txt);
-        }
-      };
-      request.send(null);
-    </script>
   </body>
 </html>
 

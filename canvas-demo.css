@@ -1,5 +1,5 @@
 body {
-  font-family: Georgia, Times, serif;
+  font-family: Georiga, Times, serif;
   font-size: small;
   margin: 0px;
   color: #606060;
@@ -38,6 +38,9 @@ header.top {
   padding: 15px;
   background: #FFFFFF;
 }
+#clearAll {
+  float: right;
+}
 aside {
   display:table-cell;
   vertical-align: top;
@@ -56,3 +59,4 @@ footer {
   font-size: 1.2em;
   background: #FFFFFF;
 }
+
