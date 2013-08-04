@@ -119,6 +119,7 @@ var addNode = function() {
   }
 }
 
+// TODO: Correctly
 var clearTree = function() {
   rbtree.root = rbtree.nil;
   var c = document.getElementById("tree");
