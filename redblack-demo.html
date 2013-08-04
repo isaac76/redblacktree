@@ -10,6 +10,23 @@
       }
     </style>
     <script src="lib/js/redblack.js"></script>
+    <script type="text/javascript">
+      var walk = function(tree, x) {
+        if(x != tree.nil) {
+          walk(tree, x.left);
+
+          var ul = document.getElementById("tree");
+          var li = document.createElement("li");
+          li.innerHTML = x.key;
+          ul.appendChild(li);
+          if(x.color == "red") {
+            li.style.color = "red";
+          }
+
+          walk(tree, x.right);
+        }
+      }
+    </script>
   </head>
   <body>
     <h1>Red Black Tree Test</h1>
@@ -25,7 +42,8 @@
       rbtree.insert(rbtree, 9);
       rbtree.insert(rbtree, 20);
       rbtree.insert(rbtree, 100);
-      rbtree.walk(rbtree, rbtree.root);
+
+      walk(rbtree, rbtree.root);
     </script>
   </body>
 </html>
