@@ -1,4 +1,4 @@
-coding-examples
-===============
+A Red/Black Tree Example
+========================
 
-Just some random coding examples
+A simple implementation of a Red/Black Tree using JavaScript.
