@@ -72,18 +72,10 @@ var displayLevel = function(tree, z, c, ctx, y, level, actual) {
       ctx.fillStyle = "white";
       ctx.font="25px Arial";
 
-      if(z.key < 0 && z.key > -10) {
-        ctx.fillText(z.key, x-14, y+8);
-      }
-      else if(z.key < -10) {
-        ctx.fillText(z.key, x-22, y+8);
-      }
-      else if(z.key < 10)
-        ctx.fillText(z.key, x-8, y+8);
-      else if(z.key < 100)
-        ctx.fillText(z.key, x-14, y+8);
-      else
-        ctx.fillText(z.key, x-22, y+8);
+      var met = ctx.measureText(z.key);
+      var width = met.width;
+      var height = 25-3; // Same as font size -3
+      ctx.fillText(z.key, Math.floor(x-width/2), Math.ceil(y+height/2));
 
 
       if(z.parent != tree.nil) {
