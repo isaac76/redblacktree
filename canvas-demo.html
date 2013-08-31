@@ -21,7 +21,7 @@
         <section id="redblackdesc">
           <ul>
             <li>Every node is either red or black</li>
-            <li>The root is black</li>
+            <li>The root is black</li>:
             <li>Every leaf is black</li>
             <li>If a node is red, then both its children are black</li>
             <li>For each node, all paths from the node to the descendant 
@@ -31,9 +31,12 @@
         <section id="rbcanvas">
           <canvas id="tree" width="600" height="500"></canvas>
           <form>
-            <input type="button" onclick="addNode()" value="Add Node"></input>
-            <input id ="userInput" type="text"></input>
-            <input id="clearAll" type="button" onclick="clearTree()" value="Clear"></input>
+            <div id="buttonGroup">
+              <input type="button" onclick="addNode()" value="Add Node"></input>
+              <input id ="addNodeText" type="text"></input>
+              <input type="button" onclick="removeNode()" value="Remove Node"></input>
+              <input id ="removeNodeText" type="text"></input>
+            </div>
           </form>
         </section>
         <aside id="code">

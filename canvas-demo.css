@@ -38,6 +38,9 @@ header.top {
   padding: 15px;
   background: #FFFFFF;
 }
+#buttonGroup {
+  display: inline-block;
+}
 #clearAll {
   float: right;
 }

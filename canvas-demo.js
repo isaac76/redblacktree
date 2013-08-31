@@ -94,8 +94,8 @@ var displayLevel = function(tree, z, c, ctx, y, level, actual) {
 }
 
 var addNode = function() {
-  var userInput = document.getElementById("userInput");
-  var iVal = userInput.value;
+  var valueToAdd = document.getElementById("addNodeText");
+  var iVal = valueToAdd.value;
 
   if($.isNumeric(iVal)) {
     rbtree.insert(rbtree, iVal);
@@ -111,10 +111,27 @@ var addNode = function() {
   }
 }
 
-// TODO: Correctly
-var clearTree = function() {
-  rbtree.root = rbtree.nil;
-  var c = document.getElementById("tree");
-  var ctx = c.getContext("2d");
-  ctx.clearRect(0, 0, c.width, c.height);
+var removeNode = function() {
+  var valueToRemove = document.getElementById("removeNodeText");
+  var iVal = valueToRemove.value;
+
+  if($.isNumeric(iVal)) {
+    var node = rbtree.find(rbtree, rbtree.root, iVal);
+
+    if(node != rbtree.nil) {
+      rbtree.deleteNode(rbtree, node);
+
+      var c = document.getElementById("tree");
+      var ctx = c.getContext("2d");
+      ctx.clearRect(0, 0, c.width, c.height);
+
+      levelOrderWalk(rbtree, rbtree.root, c, ctx);
+    }
+    else {
+      console.log("Not in tree: " + iVal);
+    }
+  }
+  else {
+    console.log("Not a number: " + iVal);
+  }
 }
